@@ -1,0 +1,91 @@
+plugins {
+    id("com.android.library")
+    id("kotlin-android")
+    id('maven-publish')
+    id('kotlin-android-extensions')
+}
+
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 30
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation "androidx.core:core-ktx:1.8.0"
+    implementation "androidx.appcompat:appcompat:1.5.0"
+    implementation "com.google.android.material:material:1.6.1"
+    implementation 'androidx.startup:startup-runtime:1.1.1'
+    implementation 'com.atlasv.android:ad-framework:1.0.1'
+}
+
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+// build a jar with javadoc
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+                artifact sourcesJar
+                // You can then customize attributes of the publication as shown below.
+                groupId 'com.atlasv.android'
+                artifactId project.name
+                version '1.0.0'
+            }
+        }
+
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/AtlasXV/android-libs")
+                credentials {
+                    username = System.getenv("GPR_USR") ?: project.findProperty("GPR_USR")
+                    password = System.getenv("GPR_KEY") ?: project.findProperty("GPR_KEY")
+                }
+            }
+        }
+    }
+}

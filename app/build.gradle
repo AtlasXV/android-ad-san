@@ -4,26 +4,24 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdkVersion 31
 
     defaultConfig {
-        applicationId = "com.atlasv.android.libtemplateapp"
-        minSdk = 21
-        targetSdk = 30
-        versionCode = 1
-        versionName = "1.0"
+        applicationId "com.atlasv.android.sanapp"
+        minSdkVersion 16
+        targetSdkVersion 30
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"

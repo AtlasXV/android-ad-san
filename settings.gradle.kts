@@ -1,2 +1,2 @@
-rootProject.name = "Android-lib-template"
-include(":app", ":templatelib")
+rootProject.name = "android-ad-san"
+include(":app", ":san")
