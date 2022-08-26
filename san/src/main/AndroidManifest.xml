@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.atlasv.android.san">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
+    <application
+        android:usesCleartextTraffic="true"
+        tools:targetApi="n" >
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <!-- This entry makes ExampleLoggerInitializer discoverable. -->
+            <meta-data  android:name="com.atlasv.android.san.SanInitializer"
+                android:value="androidx.startup" />
+        </provider>
+    </application>
 </manifest>
