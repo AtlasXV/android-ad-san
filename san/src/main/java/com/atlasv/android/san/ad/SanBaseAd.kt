@@ -63,12 +63,12 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
 
         isLoading = false
         loadTimestamp = System.currentTimeMillis()
-
         EventAgent.logEvent(
             context.applicationContext,
             AnalysisEvent.AD_LOAD_SUCCESS,
             ofBundle()
         )
+        adListener?.onAdLoaded(this)
     }
 
     protected fun checkAdInvalid(): Boolean {
@@ -86,6 +86,7 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
             AnalysisEvent.AD_LOAD_FAIL,
             bundle
         )
+        adListener?.onAdFailedToLoad(adError.errorCode)
 
         if (adError == AdError.NETWORK_ERROR && retryable) {
             retryable = false
@@ -105,6 +106,8 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
             AnalysisEvent.AD_IMPRESSION,
             ofBundle()
         )
+        adListener?.onAdOpened()
+        adListener?.onAdImpression()
     }
 
     protected fun onNotShow() {
@@ -145,6 +148,8 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
         )
         clicked = true
         clickedTimestamp = System.currentTimeMillis()
+
+        adListener?.onAdClicked()
     }
 
     protected fun onClose() {
@@ -154,6 +159,7 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
             AnalysisEvent.AD_CLOSE,
             ofBundle()
         )
+        adListener?.onAdClosed()
     }
 
     private fun ofBundle(): Bundle {
