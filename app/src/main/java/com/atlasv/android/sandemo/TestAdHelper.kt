@@ -12,11 +12,11 @@ import com.android.atlasv.ad.framework.util.AdLog
 object TestAdHelper {
     const val TAG = "TestAdHelper"
     const val PLATFORM = "san"
-    private const val ID_INTERSTITIAL = "1752"
-    private const val ID_REWARDED = "1753"
-    private const val ID_BANNER = "1754"
-    private const val ID_BANNER250 = "1751"
-    private const val ID_NATIVE = "1769"
+    private const val ID_INTERSTITIAL = "2289"
+    private const val ID_REWARDED = "1000"
+    private const val ID_BANNER = "1000"
+    private const val ID_BANNER250 = "2288"
+    private const val ID_NATIVE = "1000"
 
     private val adList = mutableMapOf<String, BaseAd?>()
     val adIdList: Map<Int, String> = mapOf(

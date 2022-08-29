@@ -13,7 +13,6 @@ import com.san.ads.core.SANAd
 https://github.com/san-sdk/sample/wiki/Rewarded-Video-Ads
  */
 class RewardVideoAd(context: Context, placementId: String) : SanBaseAd(context, placementId),
-    IAdListener.AdActionListener,
     IAdListener.AdLoadListener {
 
     private var rewardAd: SANReward? = null
@@ -24,40 +23,39 @@ class RewardVideoAd(context: Context, placementId: String) : SanBaseAd(context, 
         rewardAd?.load()
     }
 
-    override fun show(activity: Activity): Boolean {
+    fun show(activity: Activity, onGainReward: (() -> Unit)? = null) {
         if (isReady()) {
-            rewardAd?.setAdActionListener(this)
+            rewardAd?.setAdActionListener(object : IAdListener.AdActionListener {
+                override fun onAdImpressionError(error: AdError) {
+                    onShowFail(error)
+                }
+
+                override fun onAdImpression() {
+                    onShow()
+                }
+
+                override fun onAdClicked() {
+                    onClick()
+                }
+
+                override fun onAdCompleted() {
+                    AdLog.d(TAG) { "onAdCompleted $placementId" }
+                    onGainReward?.invoke()
+                }
+
+                override fun onAdClosed(p0: Boolean) {
+                    onClose()
+                }
+            })
             rewardAd?.show()
             AdLog.d(TAG) { "show $placementId" }
-            return true
         } else {
             onNotShow()
         }
-        return false
     }
 
     override fun getAdType(): Int {
         return AdType.REWARD
-    }
-
-    override fun onAdImpressionError(error: AdError) {
-        onShowFail(error)
-    }
-
-    override fun onAdImpression() {
-        onShow()
-    }
-
-    override fun onAdClicked() {
-        onClick()
-    }
-
-    override fun onAdCompleted() {
-        AdLog.d(TAG) { "onAdCompleted $placementId" }
-    }
-
-    override fun onAdClosed(p0: Boolean) {
-        onClose()
     }
 
     override fun onAdLoaded(ad: SANAd?) {
