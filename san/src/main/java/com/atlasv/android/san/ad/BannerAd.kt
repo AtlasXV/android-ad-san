@@ -42,7 +42,6 @@ class BannerAd(context: Context, placementId: String) : SanBaseAd(context, place
                 Gravity.CENTER
             )
             frameLayout.addView(view, lp)
-            frameLayout.setBackgroundColor(Color.BLACK)
             container.addView(
                 frameLayout,
                 ViewGroup.LayoutParams(
