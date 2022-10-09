@@ -34,6 +34,7 @@ class SanAdFactory : IAdFactory() {
      */
     override fun initializePlatformSdk(context: Context) {
         SanAdSdk.init(context)
+        SanAdSdk.notifyConsentStatus(context, true)
     }
 
     override fun setActivityClass4LoadAds(activityClass: Class<out Activity>) {
