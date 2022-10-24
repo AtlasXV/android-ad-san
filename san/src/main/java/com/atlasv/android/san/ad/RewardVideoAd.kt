@@ -12,13 +12,13 @@ import com.san.ads.core.SANAd
 /*
 https://github.com/san-sdk/sample/wiki/Rewarded-Video-Ads
  */
-class RewardVideoAd(context: Context, placementId: String) : SanBaseAd(context, placementId),
+class RewardVideoAd(context: Context, adId: String) : SanBaseAd(context, adId),
     IAdListener.AdLoadListener {
 
     private var rewardAd: SANReward? = null
 
     override fun doLoad() {
-        rewardAd = SANReward(context, placementId)
+        rewardAd = SANReward(context, adId)
         rewardAd?.setAdLoadListener(this)
         rewardAd?.load()
     }
@@ -39,16 +39,18 @@ class RewardVideoAd(context: Context, placementId: String) : SanBaseAd(context, 
                 }
 
                 override fun onAdCompleted() {
-                    AdLog.d(TAG) { "onAdCompleted $placementId" }
+                    AdLog.d(TAG) { "onAdCompleted $adId" }
                     onGainReward?.invoke()
                 }
 
                 override fun onAdClosed(p0: Boolean) {
                     onClose()
+                    rewardAd?.destroy()
+                    rewardAd = null
                 }
             })
             rewardAd?.show()
-            AdLog.d(TAG) { "show $placementId" }
+            AdLog.d(TAG) { "show $adId" }
         } else {
             onNotShow()
         }

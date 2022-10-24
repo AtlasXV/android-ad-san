@@ -12,14 +12,14 @@ import com.san.ads.core.SANAd
 /*
 https://github.com/san-sdk/sample/wiki/Interstitial-Ads
  */
-class InteractionAd(context: Context, placementId: String) : SanBaseAd(context, placementId),
+class InteractionAd(context: Context, adId: String) : SanBaseAd(context, adId),
     IAdListener.AdActionListener,
     IAdListener.AdLoadListener {
 
     private var interactionAd: SANInterstitial? = null
 
     override fun doLoad() {
-        interactionAd = SANInterstitial(context, placementId)
+        interactionAd = SANInterstitial(context, adId)
         interactionAd?.setAdLoadListener(this)
         interactionAd?.load()
     }
@@ -28,7 +28,7 @@ class InteractionAd(context: Context, placementId: String) : SanBaseAd(context, 
         if (isReady()) {
             interactionAd?.setAdActionListener(this)
             interactionAd?.show()
-            AdLog.d(TAG) { "show $placementId" }
+            AdLog.d(TAG) { "show $adId" }
             return true
         }
         return false
@@ -51,11 +51,13 @@ class InteractionAd(context: Context, placementId: String) : SanBaseAd(context, 
     }
 
     override fun onAdCompleted() {
-        AdLog.d(TAG) { "onAdCompleted $placementId" }
+        AdLog.d(TAG) { "onAdCompleted $adId" }
     }
 
     override fun onAdClosed(p0: Boolean) {
         onClose()
+        interactionAd?.destroy()
+        interactionAd = null
     }
 
     override fun onAdLoaded(ad: SANAd?) {

@@ -1,7 +1,6 @@
 package com.atlasv.android.san.ad
 
 import android.content.Context
-import android.graphics.Color
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -16,12 +15,12 @@ import com.san.ads.core.SANAd
 /*
 https://github.com/san-sdk/sample/wiki/Banner-Ads
  */
-class BannerAd(context: Context, placementId: String) : SanBaseAd(context, placementId),
+class BannerAd(context: Context, adId: String) : SanBaseAd(context, adId),
     IAdListener.AdLoadListener, IAdListener.AdActionListener {
     private var bannerAd: SANBanner? = null
 
     override fun doLoad() {
-        bannerAd = SANBanner(context, placementId)
+        bannerAd = SANBanner(context, adId)
         bannerAd?.adSize = AdSize.MEDIUM_RECTANGLE
         bannerAd?.setAdLoadListener(this)
         bannerAd?.load()
@@ -79,11 +78,13 @@ class BannerAd(context: Context, placementId: String) : SanBaseAd(context, place
     }
 
     override fun onAdCompleted() {
-        AdLog.d(TAG) { "onAdCompleted $placementId" }
+        AdLog.d(TAG) { "onAdCompleted $adId" }
     }
 
     override fun onAdClosed(p0: Boolean) {
         onClose()
+        bannerAd?.destroy()
+        bannerAd = null
     }
 
     override fun getAdType(): Int {

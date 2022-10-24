@@ -37,7 +37,7 @@ dependencies {
     implementation("com.google.android.material:material:1.5.0")
     implementation 'androidx.startup:startup-runtime:1.1.1'
     implementation 'com.atlasv.android:ad-framework:1.0.1'
-    api ("com.myadsget:san-sdk:3.12.7.1") {
+    api ("com.myadsget:san-sdk:3.12.7.2") {
         exclude group: 'androidx.work'
         exclude group: 'com.google.guava'
     }// SAN sdk
@@ -77,7 +77,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId 'com.atlasv.android'
                 artifactId project.name
-                version '1.0.8'
+                version '1.0.9桉树'
             }
         }
 

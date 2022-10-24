@@ -10,7 +10,7 @@ import com.android.atlasv.ad.framework.util.AdLog
 import com.atlasv.android.san.SanAdFactory
 import com.san.ads.AdError
 
-abstract class SanBaseAd(val context: Context, val placementId: String) :
+abstract class SanBaseAd(val context: Context, val adId: String) :
     BaseAd() {
     companion object {
         const val CACHE_DURATION = 60 * 60 * 1000 //60min
@@ -22,7 +22,6 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
     private var clicked = false
     private var clickedTimestamp = System.currentTimeMillis()
     private var loadTimestamp = System.currentTimeMillis()
-
     override fun getAdPlatform(): String {
         return SanAdFactory.PLATFORM
     }
@@ -37,7 +36,7 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
             AnalysisEvent.AD_LOAD,
             ofBundle()
         )
-        AdLog.d(TAG) { "load $placementId" }
+        AdLog.d(TAG) { "load $adId" }
     }
 
     override fun onResume() {
@@ -52,14 +51,14 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
                 bundle
             )
             clicked = false
-            AdLog.d(TAG) { "onAdClickBack $placementId" }
+            AdLog.d(TAG) { "onAdClickBack $adId" }
         }
     }
 
     protected abstract fun doLoad()
 
     protected fun onLoadSuccess() {
-        AdLog.d(TAG) { "onAdLoaded $placementId" }
+        AdLog.d(TAG) { "onAdLoaded $adId" }
 
         isLoading = false
         loadTimestamp = System.currentTimeMillis()
@@ -76,7 +75,7 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
     }
 
     protected fun onLoadFail(adError: AdError) {
-        AdLog.d(TAG) { "onAdLoadError $placementId, $adError" }
+        AdLog.d(TAG) { "onAdLoadError $adId, $adError" }
 
         isLoading = false
         val bundle = ofBundle()
@@ -100,7 +99,7 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
     }
 
     protected fun onShow() {
-        AdLog.d(TAG) { "onAdImpression $placementId" }
+        AdLog.d(TAG) { "onAdImpression $adId" }
         EventAgent.logEvent(
             context.applicationContext,
             AnalysisEvent.AD_IMPRESSION,
@@ -114,14 +113,14 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
         if (isLoading) {
             EventAgent.logAdShow(
                 context.applicationContext,
-                placementId,
+                adId,
                 false,
                 AnalysisStatus.LOAD_NOT_COMPLETED.getValue()
             )
         } else {
             EventAgent.logAdShow(
                 context.applicationContext,
-                placementId,
+                adId,
                 false,
                 AnalysisStatus.LOAD_FAILED.getValue()
             )
@@ -129,7 +128,7 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
     }
 
     protected fun onShowFail(error: AdError) {
-        AdLog.d(TAG) { "onAdImpressionError $placementId, $error" }
+        AdLog.d(TAG) { "onAdImpressionError $adId, $error" }
         val bundle = ofBundle()
         bundle.putInt("errorCode", error.errorCode)
         EventAgent.logEvent(
@@ -140,7 +139,7 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
     }
 
     protected fun onClick() {
-        AdLog.d(TAG) { "onAdClicked $placementId" }
+        AdLog.d(TAG) { "onAdClicked $adId" }
         EventAgent.logEvent(
             context.applicationContext,
             AnalysisEvent.AD_CLICK,
@@ -153,7 +152,7 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
     }
 
     protected fun onClose() {
-        AdLog.d(TAG) { "onAdClosed $placementId" }
+        AdLog.d(TAG) { "onAdClosed $adId" }
         EventAgent.logEvent(
             context.applicationContext,
             AnalysisEvent.AD_CLOSE,
@@ -163,6 +162,9 @@ abstract class SanBaseAd(val context: Context, val placementId: String) :
     }
 
     private fun ofBundle(): Bundle {
-        return Bundle().apply { putString("placement", placementId) }
+        return Bundle().apply {
+            putString("placement", placement)
+            putString("unit_id", adId)
+        }
     }
 }
