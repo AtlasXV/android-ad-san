@@ -77,7 +77,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId 'com.atlasv.android'
                 artifactId project.name
-                version '1.0.9桉树'
+                version '1.0.9'
             }
         }
 
