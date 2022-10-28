@@ -3,6 +3,7 @@ package com.atlasv.android.san.ad
 import android.content.Context
 import android.os.Bundle
 import com.android.atlasv.ad.framework.ad.BaseAd
+import com.android.atlasv.ad.framework.core.AdType
 import com.android.atlasv.ad.framework.event.AnalysisEvent
 import com.android.atlasv.ad.framework.event.AnalysisStatus
 import com.android.atlasv.ad.framework.event.EventAgent
@@ -12,16 +13,11 @@ import com.san.ads.AdError
 
 abstract class SanBaseAd(val context: Context, val adId: String) :
     BaseAd() {
-    companion object {
-        const val CACHE_DURATION = 60 * 60 * 1000 //60min
-    }
-
-    protected val TAG by lazy { "sanAd(${getAdType()})" }
+    protected val TAG by lazy { "sanAd(${getAdTypeString()})" }
     private var isLoading = false
     private var retryable = true
     private var clicked = false
     private var clickedTimestamp = System.currentTimeMillis()
-    private var loadTimestamp = System.currentTimeMillis()
     override fun getAdPlatform(): String {
         return SanAdFactory.PLATFORM
     }
@@ -61,17 +57,12 @@ abstract class SanBaseAd(val context: Context, val adId: String) :
         AdLog.d(TAG) { "onAdLoaded $adId" }
 
         isLoading = false
-        loadTimestamp = System.currentTimeMillis()
         EventAgent.logEvent(
             context.applicationContext,
             AnalysisEvent.AD_LOAD_SUCCESS,
             ofBundle()
         )
         adListener?.onAdLoaded(this)
-    }
-
-    protected fun checkAdInvalid(): Boolean {
-        return System.currentTimeMillis() - loadTimestamp < CACHE_DURATION
     }
 
     protected fun onLoadFail(adError: AdError) {
@@ -165,6 +156,16 @@ abstract class SanBaseAd(val context: Context, val adId: String) :
         return Bundle().apply {
             putString("placement", placement)
             putString("unit_id", adId)
+        }
+    }
+
+    private fun getAdTypeString(): String {
+        return when(getAdType()) {
+            AdType.BANNER -> "Banner"
+            AdType.NATIVE -> "Native"
+            AdType.INTERSTITIAL -> "Interstitial"
+            AdType.REWARD -> "Reward"
+            else -> "Unknown"
         }
     }
 }

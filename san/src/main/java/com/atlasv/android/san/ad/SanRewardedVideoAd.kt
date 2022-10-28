@@ -16,43 +16,50 @@ class SanRewardedVideoAd(context: Context, adId: String) : SanBaseAd(context, ad
     IAdListener.AdLoadListener {
 
     private var rewardAd: SANReward? = null
+    private var sanRewardedAction: (() -> Unit)? = null
 
     override fun doLoad() {
         rewardAd = SANReward(context, adId)
         rewardAd?.setAdLoadListener(this)
+        rewardAd?.setAdActionListener(object : IAdListener.AdActionListener {
+            override fun onAdImpressionError(error: AdError) {
+                onShowFail(error)
+                sanRewardedAction = null
+            }
+
+            override fun onAdImpression() {
+                onShow()
+            }
+
+            override fun onAdClicked() {
+                onClick()
+            }
+
+            override fun onAdCompleted() {
+                AdLog.d(TAG) { "onAdCompleted $adId" }
+                sanRewardedAction?.invoke()
+                sanRewardedAction = null
+            }
+
+            override fun onAdClosed(p0: Boolean) {
+                onClose()
+                sanRewardedAction = null
+                rewardAd?.destroy()
+                rewardAd = null
+            }
+        })
         rewardAd?.load()
     }
 
-    fun show(activity: Activity, onGainReward: (() -> Unit)? = null) {
-        if (isReady()) {
-            rewardAd?.setAdActionListener(object : IAdListener.AdActionListener {
-                override fun onAdImpressionError(error: AdError) {
-                    onShowFail(error)
-                }
-
-                override fun onAdImpression() {
-                    onShow()
-                }
-
-                override fun onAdClicked() {
-                    onClick()
-                }
-
-                override fun onAdCompleted() {
-                    AdLog.d(TAG) { "onAdCompleted $adId" }
-                    onGainReward?.invoke()
-                }
-
-                override fun onAdClosed(p0: Boolean) {
-                    onClose()
-                    rewardAd?.destroy()
-                    rewardAd = null
-                }
-            })
+    override fun show(activity: Activity, rewardedAction: () -> Unit): Boolean {
+        return if (isReady()) {
+            sanRewardedAction = rewardedAction
             rewardAd?.show()
             AdLog.d(TAG) { "show $adId" }
+            true
         } else {
             onNotShow()
+            false
         }
     }
 
@@ -69,7 +76,7 @@ class SanRewardedVideoAd(context: Context, adId: String) : SanBaseAd(context, ad
     }
 
     override fun isReady(): Boolean {
-        return checkAdInvalid() && rewardAd?.isAdReady == true
+        return rewardAd?.isAdReady == true
     }
 
 }

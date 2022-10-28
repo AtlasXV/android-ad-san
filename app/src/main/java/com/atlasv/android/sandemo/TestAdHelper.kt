@@ -8,10 +8,12 @@ import com.android.atlasv.ad.framework.core.AdManager
 import com.android.atlasv.ad.framework.core.AdType
 import com.android.atlasv.ad.framework.event.AnalyticsListener
 import com.android.atlasv.ad.framework.util.AdLog
+import com.atlasv.android.san.ad.SanBannerAd
+import com.san.ads.AdSize
 
 object TestAdHelper {
     const val TAG = "TestAdHelper"
-    const val PLATFORM = "san"
+    private const val PLATFORM = "san"
     private const val ID_INTERSTITIAL = "1752"
     private const val ID_REWARDED = "1753"
     private const val ID_BANNER = "1754"
@@ -40,7 +42,11 @@ object TestAdHelper {
         adList.clear()
         adIdList.forEach {
             val (type, adId) = it
-            adList[adId] = AdManager.buildAd(context, type, adId, PLATFORM)
+            if (adId == ID_BANNER250) {
+                adList[adId] = SanBannerAd(context, adId, AdSize.MEDIUM_RECTANGLE)
+            } else {
+                adList[adId] = AdManager.buildAd(context, type, adId, PLATFORM)
+            }
         }
     }
 

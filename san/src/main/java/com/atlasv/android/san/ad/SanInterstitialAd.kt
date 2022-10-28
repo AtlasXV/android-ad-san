@@ -16,18 +16,18 @@ class SanInterstitialAd(context: Context, adId: String) : SanBaseAd(context, adI
     IAdListener.AdActionListener,
     IAdListener.AdLoadListener {
 
-    private var interactionAd: SANInterstitial? = null
+    private var interstitialAd: SANInterstitial? = null
 
     override fun doLoad() {
-        interactionAd = SANInterstitial(context, adId)
-        interactionAd?.setAdLoadListener(this)
-        interactionAd?.load()
+        interstitialAd = SANInterstitial(context, adId)
+        interstitialAd?.setAdLoadListener(this)
+        interstitialAd?.load()
     }
 
     override fun show(activity: Activity): Boolean {
         if (isReady()) {
-            interactionAd?.setAdActionListener(this)
-            interactionAd?.show()
+            interstitialAd?.setAdActionListener(this)
+            interstitialAd?.show()
             AdLog.d(TAG) { "show $adId" }
             return true
         }
@@ -56,8 +56,8 @@ class SanInterstitialAd(context: Context, adId: String) : SanBaseAd(context, adI
 
     override fun onAdClosed(p0: Boolean) {
         onClose()
-        interactionAd?.destroy()
-        interactionAd = null
+        interstitialAd?.destroy()
+        interstitialAd = null
     }
 
     override fun onAdLoaded(ad: SANAd?) {
@@ -69,6 +69,6 @@ class SanInterstitialAd(context: Context, adId: String) : SanBaseAd(context, adI
     }
 
     override fun isReady(): Boolean {
-        return checkAdInvalid() && interactionAd?.isAdReady == true
+        return interstitialAd?.isAdReady == true
     }
 }

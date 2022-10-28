@@ -1,6 +1,9 @@
 package com.atlasv.android.sandemo
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
@@ -35,8 +38,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showBanner() {
+        val lp = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            Gravity.CENTER
+        )
         TestAdHelper.getAd(TestAdHelper.adIdList[AdType.BANNER]!!)
-            ?.show(dataBinding.flBanner, R.id.flBanner)
+            ?.show(dataBinding.flBanner, lp)
 
     }
 
@@ -46,7 +54,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showReward() {
-        TestAdHelper.getAd(TestAdHelper.adIdList[AdType.REWARD]!!)?.show(this)
-
+        TestAdHelper.getAd(TestAdHelper.adIdList[AdType.REWARD]!!)?.show(this) {
+            Log.d("sanAd(Reward)", "onRewarded")
+        }
     }
 }
