@@ -15,7 +15,7 @@ import com.san.ads.core.SANAd
 /*
 https://github.com/san-sdk/sample/wiki/Banner-Ads
  */
-class BannerAd(context: Context, adId: String) : SanBaseAd(context, adId),
+class SanBannerAd(context: Context, adId: String) : SanBaseAd(context, adId),
     IAdListener.AdLoadListener, IAdListener.AdActionListener {
     private var bannerAd: SANBanner? = null
 

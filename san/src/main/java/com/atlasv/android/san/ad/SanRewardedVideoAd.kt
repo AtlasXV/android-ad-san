@@ -12,7 +12,7 @@ import com.san.ads.core.SANAd
 /*
 https://github.com/san-sdk/sample/wiki/Rewarded-Video-Ads
  */
-class RewardVideoAd(context: Context, adId: String) : SanBaseAd(context, adId),
+class SanRewardedVideoAd(context: Context, adId: String) : SanBaseAd(context, adId),
     IAdListener.AdLoadListener {
 
     private var rewardAd: SANReward? = null

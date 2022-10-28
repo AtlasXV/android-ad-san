@@ -12,7 +12,7 @@ import com.san.ads.core.SANAd
 /*
 https://github.com/san-sdk/sample/wiki/Interstitial-Ads
  */
-class InteractionAd(context: Context, adId: String) : SanBaseAd(context, adId),
+class SanInterstitialAd(context: Context, adId: String) : SanBaseAd(context, adId),
     IAdListener.AdActionListener,
     IAdListener.AdLoadListener {
 
