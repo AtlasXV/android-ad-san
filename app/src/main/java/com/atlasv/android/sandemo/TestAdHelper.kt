@@ -42,11 +42,10 @@ object TestAdHelper {
         adList.clear()
         adIdList.forEach {
             val (type, adId) = it
-            if (adId == ID_BANNER250) {
-                adList[adId] = SanBannerAd(context, adId, AdSize.MEDIUM_RECTANGLE)
-            } else {
-                adList[adId] = AdManager.buildAd(context, type, adId, PLATFORM)
-            }
+            val inlineBanner = adId == ID_BANNER250
+            adList[adId] = AdManager.buildAd(
+                context = context, type = type, adId = adId,
+                platform = PLATFORM, inlineBanner = inlineBanner)
         }
     }
 

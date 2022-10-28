@@ -36,7 +36,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.5.1")
     implementation("com.google.android.material:material:1.7.0")
     implementation 'androidx.startup:startup-runtime:1.1.1'
-    implementation 'com.atlasv.android:ad-framework:2.0.1-gz'
+    implementation 'com.atlasv.android:ad-framework:2.0.2-gz'
     api ("com.myadsget:san-sdk:3.12.7.2") {
         exclude group: 'androidx.work'
         exclude group: 'com.google.guava'
