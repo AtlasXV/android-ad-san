@@ -35,7 +35,16 @@
 
 ## 三、基本使用
 
-### 1.初始化
+### 1.集成时的依赖冲突，主要是（WorkManager和Exoplayer)
+```
+    implementation/api('com.atlasv.android:san:x.x.x-gz'){
+        exclude group: 'androidx.work'
+        exclude group: 'com.google.android.exoplayer'
+        exclude group: 'com.google.guava'
+    }
+```
+
+### 2.初始化
 自定义好自己的广告id list，并在MainActivity的onCreate处初始化广告，为了防止activity被回收后重新创建导致build的广告对象不可用，必须在build之前clear掉之前的单例对象：
 ```kotlin
 private val list = arrayListOf(AdType.NATIVE to id,...)
@@ -45,7 +54,7 @@ list.forEach {
 }
 ```
 
-### 2、插屏广告
+### 3、插屏广告
 插屏广告需要提前预加载，插屏和原生不同，原生不做预加载，在使用场景中load成功后，也会去show。插屏为了保证使用场景的一致性，未预加载好则不显示
 ```kotlin
 prepare：AdManager.instance.getAd(id)?.prepare()
@@ -56,7 +65,7 @@ if (ad?.isReady() == true) {
 }
 ```
 
-### 3、接入埋点统计
+### 4、接入埋点统计
 ```kotlin
 AdManager.instance.setAnalyticsListener(object : AnalyticsListener {
     override fun logEvent(event: String, bundle: Bundle?) {
