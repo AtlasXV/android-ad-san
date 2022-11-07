@@ -18,12 +18,15 @@ abstract class SanBaseAd(val context: Context, val adId: String) :
     private var retryable = true
     private var clicked = false
     private var clickedTimestamp = System.currentTimeMillis()
+    protected var isShowing = false
+
     override fun getAdPlatform(): String {
         return SanAdFactory.PLATFORM
     }
 
     override fun prepare() {
         if (isLoading) return
+        if (isShowing) return
         if (isReady()) return
         isLoading = true
         doLoad()

@@ -26,6 +26,7 @@ class SanInterstitialAd(context: Context, adId: String) : SanBaseAd(context, adI
 
     override fun show(activity: Activity): Boolean {
         if (isReady()) {
+            isShowing = true
             interstitialAd?.setAdActionListener(this)
             interstitialAd?.show()
             AdLog.d(TAG) { "show $adId" }
@@ -39,7 +40,10 @@ class SanInterstitialAd(context: Context, adId: String) : SanBaseAd(context, adI
     }
 
     override fun onAdImpressionError(error: AdError) {
+        isShowing = false
         onShowFail(error)
+        interstitialAd?.destroy()
+        interstitialAd = null
     }
 
     override fun onAdImpression() {
@@ -55,6 +59,7 @@ class SanInterstitialAd(context: Context, adId: String) : SanBaseAd(context, adI
     }
 
     override fun onAdClosed(p0: Boolean) {
+        isShowing = false
         onClose()
         interstitialAd?.destroy()
         interstitialAd = null

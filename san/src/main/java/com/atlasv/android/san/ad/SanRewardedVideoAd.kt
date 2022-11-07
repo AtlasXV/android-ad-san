@@ -23,8 +23,11 @@ class SanRewardedVideoAd(context: Context, adId: String) : SanBaseAd(context, ad
         rewardAd?.setAdLoadListener(this)
         rewardAd?.setAdActionListener(object : IAdListener.AdActionListener {
             override fun onAdImpressionError(error: AdError) {
+                isShowing = false
                 onShowFail(error)
                 sanRewardedAction = null
+                rewardAd?.destroy()
+                rewardAd = null
             }
 
             override fun onAdImpression() {
@@ -42,6 +45,7 @@ class SanRewardedVideoAd(context: Context, adId: String) : SanBaseAd(context, ad
             }
 
             override fun onAdClosed(p0: Boolean) {
+                isShowing = false
                 onClose()
                 sanRewardedAction = null
                 rewardAd?.destroy()
@@ -53,6 +57,7 @@ class SanRewardedVideoAd(context: Context, adId: String) : SanBaseAd(context, ad
 
     override fun show(activity: Activity, rewardedAction: () -> Unit): Boolean {
         return if (isReady()) {
+            isShowing = true
             sanRewardedAction = rewardedAction
             rewardAd?.show()
             AdLog.d(TAG) { "show $adId" }
