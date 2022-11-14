@@ -10,6 +10,8 @@ import com.android.atlasv.ad.framework.event.EventAgent
 import com.android.atlasv.ad.framework.util.AdLog
 import com.atlasv.android.san.SanAdFactory
 import com.san.ads.AdError
+import com.san.ads.core.SANAd
+import com.san.api.SanAdSdk
 
 abstract class SanBaseAd(val context: Context, val adId: String) :
     BaseAd() {
@@ -20,11 +22,18 @@ abstract class SanBaseAd(val context: Context, val adId: String) :
     private var clickedTimestamp = System.currentTimeMillis()
     protected var isShowing = false
 
+    override fun isMobileAdsInitComplete(): Boolean {
+        return SanAdSdk.hasInitialized()
+    }
     override fun getAdPlatform(): String {
         return SanAdFactory.PLATFORM
     }
 
     override fun prepare() {
+        if (!isMobileAdsInitComplete()) {
+            SanAdFactory.initializePlatformSdk(context)
+            return
+        }
         if (isLoading) return
         if (isShowing) return
         if (isReady()) return
