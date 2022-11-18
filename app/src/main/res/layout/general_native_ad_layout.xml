@@ -8,25 +8,25 @@
     android:paddingBottom="6dp">
 
     <FrameLayout
-        android:id="@+id/ad_media"
+        android:id="@+id/media"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="16:8.3625"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ad_icon"
+        android:id="@+id/icon"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginStart="6dp"
         android:layout_marginTop="6dp"
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ad_media"
+        app:layout_constraintTop_toBottomOf="@+id/media"
         tools:ignore="contentDescription" />
 
     <TextView
-        android:id="@+id/ad_headline"
+        android:id="@+id/headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -38,11 +38,11 @@
         android:text="headline"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/ad_icon"
-        app:layout_constraintTop_toBottomOf="@+id/ad_media" />
+        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintTop_toBottomOf="@+id/media" />
 
     <TextView
-        android:id="@+id/ad_body"
+        android:id="@+id/body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="2"
@@ -51,12 +51,12 @@
         android:textColor="@color/black"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ad_icon"
-        app:layout_constraintTop_toBottomOf="@+id/ad_headline"
+        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintTop_toBottomOf="@+id/headline"
         tools:text="body" />
 
     <TextView
-        android:id="@+id/ad_callToAction"
+        android:id="@+id/callToAction"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="6dp"
@@ -69,7 +69,7 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/ad_media"
+        app:layout_constraintTop_toBottomOf="@+id/media"
         tools:text="Install" />
 
     <ImageView

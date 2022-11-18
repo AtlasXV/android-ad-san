@@ -49,11 +49,11 @@ class SanNativeAd(context: Context, adId: String) : SanBaseAd(context, adId),
     }
 
     private fun renderAdContent(container: View, ad: SANNativeAd) {
-        val icon = container.findViewById<ImageView>(R.id.ad_icon)
-        val title = container.findViewById<TextView>(R.id.ad_headline)
-        val body = container.findViewById<TextView>(R.id.ad_body)
-        val button = container.findViewById<TextView>(R.id.ad_callToAction)
-        val mediaLayout = container.findViewById<ViewGroup>(R.id.ad_media)
+        val icon = container.findViewById<ImageView>(R.id.icon)
+        val title = container.findViewById<TextView>(R.id.headline)
+        val body = container.findViewById<TextView>(R.id.body)
+        val button = container.findViewById<TextView>(R.id.callToAction)
+        val mediaLayout = container.findViewById<ViewGroup>(R.id.media)
         AdViewRenderHelper.loadImage(context, ad.iconUrl, icon)
         title.text = ad.title
         body.text = ad.content
