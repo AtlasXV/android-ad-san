@@ -36,7 +36,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.5.1")
     implementation("com.google.android.material:material:1.7.0")
     implementation 'androidx.startup:startup-runtime:1.1.1'
-    implementation 'com.atlasv.android:ad-framework-gz:2.0.8'
+    implementation 'com.atlasv.android:ad-framework-gz:2.0.9'
     // 更新版本，千万记得看看WeakIniter的变化，禁了san-sdk的自启动，按需初始化，不适配可能会导致崩溃！
     api ("com.myadsget:san-sdk:3.12.7.7") // SAN sdk
 }

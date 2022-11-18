@@ -10,6 +10,7 @@ import com.android.atlasv.ad.framework.core.IAdFactory
 import com.android.atlasv.ad.framework.util.AdLog
 import com.atlasv.android.san.ad.SanBannerAd
 import com.atlasv.android.san.ad.SanInterstitialAd
+import com.atlasv.android.san.ad.SanNativeAd
 import com.atlasv.android.san.ad.SanRewardedVideoAd
 import com.san.ads.AdSize
 import com.san.api.SanAdSdk
@@ -20,8 +21,15 @@ object SanAdFactory : IAdFactory() {
     const val PLATFORM = "san"
     private var startInitialize = false
 
-    override fun buildAd(context: Context, type: Int, adId: String, loadLayoutId: Int, inlineBanner: Boolean): BaseAd? {
+    override fun buildAd(
+        context: Context,
+        type: Int,
+        adId: String,
+        loadLayoutId: Int,
+        inlineBanner: Boolean
+    ): BaseAd? {
         return when (type) {
+            AdType.NATIVE -> SanNativeAd(context, adId)
             AdType.INTERSTITIAL -> SanInterstitialAd(context, adId)
             AdType.BANNER -> {
                 val adSize = if (inlineBanner) AdSize.MEDIUM_RECTANGLE else AdSize.BANNER

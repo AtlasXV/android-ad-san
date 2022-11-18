@@ -23,6 +23,15 @@ class MainActivity : AppCompatActivity() {
         TestAdHelper.build(this)
     }
 
+    fun loadNative() {
+        TestAdHelper.getAd(TestAdHelper.adIdList[AdType.NATIVE]!!)?.prepare()
+    }
+
+    fun showNative() {
+        TestAdHelper.getAd(TestAdHelper.adIdList[AdType.NATIVE]!!)
+            ?.show(dataBinding.nativeCard, R.layout.general_native_ad_layout)
+    }
+
     fun loadInteraction() {
         TestAdHelper.getAd(TestAdHelper.adIdList[AdType.INTERSTITIAL]!!)?.prepare()
     }

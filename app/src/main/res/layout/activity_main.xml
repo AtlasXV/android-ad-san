@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -11,69 +12,95 @@
             type="com.atlasv.android.sandemo.MainActivity" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.atlasv.android.sandemo.MainActivity">
+        android:layout_height="match_parent">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minLines="3"
-            android:text="@{activity.interactionAdResult}" />
+            android:orientation="vertical"
+            tools:context="com.atlasv.android.sandemo.MainActivity">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->activity.loadInteraction()}"
-            android:text="load interaction" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="3"
+                android:text="@{activity.interactionAdResult}" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->activity.showInteraction()}"
-            android:text="show interaction" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->activity.loadInteraction()}"
+                android:text="load interaction" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="3"
-            android:text="@{activity.bannerAdResult}" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->activity.showInteraction()}"
+                android:text="show interaction" />
 
-        <FrameLayout
-            android:id="@+id/flBanner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="3"
+                android:text="@{activity.bannerAdResult}" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->activity.loadBanner()}"
-            android:text="load banner" />
+            <FrameLayout
+                android:id="@+id/flBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->activity.showBanner()}"
-            android:text="show banner" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->activity.loadBanner()}"
+                android:text="load banner" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="3"
-            android:text="@{activity.rewardAdResult}" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->activity.showBanner()}"
+                android:text="show banner" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->activity.loadReward()}"
-            android:text="load reward" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="3"
+                android:text="@{activity.rewardAdResult}" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->activity.showReward()}"
-            android:text="show reward" />
-    </LinearLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->activity.loadReward()}"
+                android:text="load reward" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->activity.showReward()}"
+                android:text="show reward" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/nativeCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->activity.loadNative()}"
+                android:text="load native" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->activity.showNative()}"
+                android:text="show native" />
+        </LinearLayout>
+    </ScrollView>
 </layout>

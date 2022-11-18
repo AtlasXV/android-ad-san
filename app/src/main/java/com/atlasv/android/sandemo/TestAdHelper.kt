@@ -22,6 +22,7 @@ object TestAdHelper {
 
     private val adList = mutableMapOf<String, BaseAd?>()
     val adIdList: Map<Int, String> = mapOf(
+        AdType.NATIVE to ID_NATIVE,
         AdType.INTERSTITIAL to ID_INTERSTITIAL,
         AdType.BANNER to ID_BANNER250,
         AdType.REWARD to ID_REWARDED
