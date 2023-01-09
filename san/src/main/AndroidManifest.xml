@@ -20,12 +20,5 @@
             <meta-data  android:name="com.atlasv.android.san.SanInitializer"
                 android:value="androidx.startup" />
         </provider>
-        <provider
-            android:name="com.san.core.WeakIniter"
-            android:authorities="${applicationId}.san.weak"
-            android:exported="false"
-            android:multiprocess="true"
-            android:enabled="false"
-            tools:node="merge"/>
     </application>
 </manifest>

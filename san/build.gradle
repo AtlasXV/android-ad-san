@@ -75,7 +75,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId 'com.atlasv.android'
                 artifactId project.name + "-gz"
-                version '2.1.1'
+                version '2.1.2'
             }
         }
 

@@ -51,11 +51,6 @@ object SanAdFactory : IAdFactory() {
         if (!startInitialize) {
             startInitialize = true
             try {
-                val provider = ComponentName(context, "com.san.core.WeakIniter")
-                context.packageManager.setComponentEnabledSetting(
-                    provider, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                    PackageManager.DONT_KILL_APP
-                )
                 SanAdSdk.notifyConsentStatus(context, true)
                 SanAdSdk.init(context)
             } catch (e: Throwable) {
